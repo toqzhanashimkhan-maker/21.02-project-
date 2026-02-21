@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Eagle+Lake&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --scarlet: #740001;
+            --parchment: #f4e4bc;
+            --dark-magic: #0a0a0a;
+            --deep-blue: #0e1a40;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; transition: var(--transition); }
+
+        body {
+            background-color: var(--dark-magic);
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                              url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            color: var(--parchment);
+            font-family: 'MedievalSharp', cursive;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 3rem 1rem;
+            text-align: center;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            border-bottom: 1px solid var(--gold);
+        }
+
+        .main-logo {
+            max-width: 320px;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-display {
+            font-family: 'Cinzel Decorative';
+            color: var(--gold);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .magic-rule {
+            display: block;
+            margin: 20px auto;
+            max-width: 500px;
+            filter: sepia(1) saturate(1.5);
+            opacity: 0.8;
+        }
+
+        .input-box {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 3.5rem 2rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .corner {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: url('https://cdn-hogwartslegacy.warnerbrosgames.com/static/corner-left.webp') no-repeat;
+            background-size: contain;
+            pointer-events: none;
+        }
+        .corner-tl { top: -5px; left: -5px; }
+        .corner-tr { top: -5px; right: -5px; transform: rotate(90deg); }
+        .corner-bl { bottom: -5px; left: -5px; transform: rotate(-90deg); }
+        .corner-br { bottom: -5px; right: -5px; transform: rotate(180deg); }
+
+        .input-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 250px;
+            background: #000;
+            border: 1px solid var(--gold);
+            padding: 15px;
+            color: var(--parchment);
+            font-family: 'Eagle Lake', cursive;
+            outline: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 12px 25px;
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: bold;
+            border: 1px solid var(--gold);
+            background: var(--scarlet);
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: var(--gold);
+            color: var(--scarlet);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px var(--gold);
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .scroll-card {
+            background: #f4e4bc url('https://www.transparenttextures.com/patterns/parchment.png');
+            color: #2c1e05;
+            padding: 2rem;
+            border-left: 10px solid var(--scarlet);
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center; justify-content: center;
+        }
+
+        .modal-content {
+            background: #111;
+            padding: 3rem;
+            border: 2px solid var(--gold);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            text-align: center;
+        }
+
+      
+        footer {
+            padding: 4rem 2rem;
+            background: #050505;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            margin-top: 4rem;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .footer-section p, .footer-section li {
+            font-family: 'Eagle Lake', cursive;
+            font-size: 0.8rem;
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            list-style: none;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            text-align: center;
+            color: var(--gold);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://www.harrypotter.com/_next/static/images/logo-gold-600-7a7e89b6db1ffeaab025f2091d21b645.png" alt="HP Logo" class="main-logo">
+        <div class="stats-display">Active Missions: <span id="taskCount">0</span></div>
+    </header>
+
+    <main>
+        <img src="https://cdn-hogwartslegacy.warnerbrosgames.com/static/rule-a.png" class="magic-rule">
+
+        <section class="input-box">
+            <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+            <div class="input-group">
+                <input type="text" id="taskInput" placeholder="Write your next adventure..." maxlength="50">
+                <button class="btn" id="addBtn">Accio!</button>
+            </div>
+            <div id="charCounter" style="text-align: right; color: var(--gold); font-size: 0.8rem; margin-top: 10px;">0 / 50 ink</div>
+        </section>
+
+        <section class="controls">
+            <button class="btn" id="sortBtn" style="background: var(--deep-blue);">Sort Scrolls</button>
+            <button class="btn" id="viewTrailerBtn" style="background: var(--gold); color: black;">Watch Prophecy</button>
+            <button class="btn" id="clearAllBtn" style="background: #4a0000;">Obliviate All</button>
+        </section>
+
+        <div id="taskContainer" class="task-grid"></div>
+    </main>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--gold)">Transfigure Scroll</h2>
+            <input type="text" id="editInput" maxlength="50" style="width: 100%; margin: 20px 0; background: #000; color: #fff; border: 1px solid var(--gold); padding: 12px;">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" id="saveEditBtn" style="flex: 1">Save</button>
+                <button class="btn" id="closeEditBtn" style="flex: 1; background: #333">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; background: #000;">
+            <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+                <iframe id="trailerIframe" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/BsC-Rl9GYy0?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <button class="btn" id="closeVideoBtn" style="margin-top: 20px; width: 100%; background: #333;">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About The Registry</h4>
+                <p>This enchanted task scroll is maintained by the Ministry of Magic. Every entry is bound by ancient spells to ensure your Hogwarts legacy is never forgotten.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Department of Rules</h4>
+                <ul>
+                    <li>• Keep your wand at the ready</li>
+                    <li>• Do not scroll after midnight</li>
+                    <li>• Forbidden spells will be deleted</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Magical Support</h4>
+                <p>For urgent matters, send an owl to the Headmaster's office. The registry is updated in real-time via LocalStorage charms.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            MISCHIEF MANAGED &copy; 2026 | MINISTRY OF TASKS
+        </div>
+    </footer>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem("hogwarts_db")) || [];
+        let editIndex = null;
+
+        const taskInput = document.getElementById("taskInput");
+        const taskContainer = document.getElementById("taskContainer");
+        const taskCountDisplay = document.getElementById("taskCount");
+        const editModal = document.getElementById("editModal");
+        const videoModal = document.getElementById("videoModal");
+        const trailerIframe = document.getElementById("trailerIframe");
+
+        function render() {
+            taskContainer.innerHTML = "";
+            taskCountDisplay.innerText = tasks.length;
+            tasks.forEach((task, index) => {
+                const card = document.createElement("div");
+                card.className = "scroll-card";
+                card.innerHTML = `
+                    <p>${task}</p>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" style="padding: 5px; font-size: 0.7rem; flex: 1" onclick="openEdit(${index})">Edit</button>
+                        <button class="btn" style="padding: 5px; font-size: 0.7rem; flex: 1; background: #4a0000" onclick="deleteTask(${index})">Burn</button>
+                    </div>
+                `;
+                taskContainer.appendChild(card);
+            });
+            localStorage.setItem("hogwarts_db", JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const val = taskInput.value.trim();
+            if (val) { tasks.push(val); taskInput.value = ""; render(); }
+        }
+
+        function deleteTask(index) {
+            if(confirm("Burn this scroll?")) { tasks.splice(index, 1); render(); }
+        }
+
+        function openEdit(index) {
+            editIndex = index;
+            document.getElementById("editInput").value = tasks[index];
+            editModal.style.display = "flex";
+        }
+
+        document.getElementById("saveEditBtn").onclick = () => {
+            tasks[editIndex] = document.getElementById("editInput").value;
+            editModal.style.display = "none";
+            render();
+        };
+
+        document.getElementById("addBtn").onclick = addTask;
+        taskInput.onkeypress = (e) => { if(e.key === "Enter") addTask(); };
+        document.getElementById("sortBtn").onclick = () => { tasks.sort(); render(); };
+        document.getElementById("clearAllBtn").onclick = () => { if(confirm("Clear all?")) { tasks = []; render(); } };
+        document.getElementById("viewTrailerBtn").onclick = () => videoModal.style.display = "flex";
+        document.getElementById("closeVideoBtn").onclick = () => { videoModal.style.display = "none"; trailerIframe.src = trailerIframe.src; };
+        document.getElementById("closeEditBtn").onclick = () => editModal.style.display = "none";
+
+        render();
+    </script>
+</body>
+</html>
